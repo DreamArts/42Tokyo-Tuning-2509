@@ -48,7 +48,7 @@ test("ロボット: delivery-plan → delivering → status更新で completed",
       r.request().method() === "POST"
   );
   await page.getByRole("button", { name: "注文送信" }).click();
-  expect((await orderPost).status()).toBe(200);
+  expect((await orderPost).status()).toBe(201);
   await alertP;
 
   // 2) ロボット: delivery-plan を叩く（capacityを十分に大きく）

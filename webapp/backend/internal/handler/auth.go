@@ -18,9 +18,9 @@ func NewAuthHandler(authSvc *service.AuthService) *AuthHandler {
 	return &AuthHandler{AuthSvc: authSvc}
 }
 
-// ログイン時にセッションを発行し、Cookieにセットする
+// Login issues a session and sets it in Cookie
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
-	log.Println("-> Received request for /api/login")
+	// REMOVED: log.Println("-> Received request for /api/login")
 
 	var req model.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -45,6 +45,9 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		Path:     "/",
 	})
+
+	// Keep only successful login logs for diagnostics
+	 log.Printf("Login successful for UserName '%s', session created.", req.UserName)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

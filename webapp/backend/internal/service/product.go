@@ -49,7 +49,13 @@ func (s *ProductService) CreateOrders(ctx context.Context, userID int, items []m
 	if err != nil {
 		return nil, err
 	}
-	log.Printf("Created %d orders for user %d", len(insertedOrderIDs), userID)
+	
+	// REMOVED: log.Printf("Created %d orders for user %d", len(insertedOrderIDs), userID)
+	// Keep logs only for large orders (for Robot API diagnostics)
+	if len(insertedOrderIDs) > 5 {
+		log.Printf("Created %d orders for user %d", len(insertedOrderIDs), userID)
+	}
+	
 	return insertedOrderIDs, nil
 }
 
