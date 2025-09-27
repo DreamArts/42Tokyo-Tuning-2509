@@ -18,7 +18,7 @@ func InitDBConnection() (*sqlx.DB, error) {
 		dbUrl = "user:password@tcp(db:3306)/42Tokyo2508-db"
 	}
 	
-	// Add optimization parameters to DSN
+	// Add optimization parameters to DSN for better performance
 	dsn := fmt.Sprintf("%s?charset=utf8mb4&parseTime=True&loc=Local&timeout=10s&readTimeout=30s&writeTimeout=30s&maxAllowedPacket=0&interpolateParams=true", dbUrl)
 	log.Printf("Database DSN: %s", dsn)
 
@@ -39,11 +39,11 @@ func InitDBConnection() (*sqlx.DB, error) {
 	}
 	log.Println("Successfully connected to MySQL!")
 
-	// Optimize connection pool settings
-	// Increase MaxOpenConns to 50 for better parallel request handling
-	dbConn.SetMaxOpenConns(50)
-	// Increase MaxIdleConns to 20 for better connection reuse
-	dbConn.SetMaxIdleConns(20)
+	// Optimize connection pool settings for high load
+	// Increase MaxOpenConns to 80 for better parallel request handling
+	dbConn.SetMaxOpenConns(80)
+	// Increase MaxIdleConns to 40 for better connection reuse
+	dbConn.SetMaxIdleConns(40)
 	// Set connection lifetime to 5 minutes to prevent MySQL connection issues
 	dbConn.SetConnMaxLifetime(5 * time.Minute)
 	// Set maximum connection idle time
