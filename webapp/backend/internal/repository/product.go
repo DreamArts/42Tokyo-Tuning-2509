@@ -25,6 +25,7 @@ func (r *ProductRepository) ListProducts(ctx context.Context, userID int, req mo
 		SELECT product_id, name, value, weight, image, description
 		FROM products
 	`
+	// 検索条件の引数を格納するスライス。後で SQL に渡す。
 	args := []interface{}{}
 
 	// キーワード検索が指定されていれば name / description の部分一致に変換する。
